@@ -1768,12 +1768,21 @@ func main() {
 
 Redis 安装好后，默认有 16 个数据库，**初始默认使用 0 号库**，编号是 0, 1, ..., 15
 
+**通用命令：**
+
 1. 添加 key-val : `set key value`
 2. 查看当前 redis 库的所有 key ：`keys *`
 3. 获取 key 对应的 value : `get key`
 4. 切换 redis 库：`select index`
 5. 查看当前库的 key-value 的数量：`dbsize`
 6. 清空当前数据库的 key-value 和清空所有库的 key-value : `flushdb, flushall`
+7. `keys pattern` 查找所有符合给定类型的 key
+8. `exists key` 检查给定的 key 是否存在
+9. `type key` 返回给定的 key 的类型
+10. `ttl key` 返回给定的 key 的最长存活时间
+11. `delete key` 若 key 存在删除 key
+
+
 
 ## redis的五大数据类型
 
@@ -1825,6 +1834,15 @@ redis 中 List 的元素是有序的，元素可以重复
 - `smembers setKey`显示 set 的所有元素
 - `sismember setKey member`判断该值是否在 set 中
 - `srem setKey member`删除指定值 
+
+### Sorted Set
+
+sorted set 有序集合是 string 类型元素的集合，且不允许重复的成员。每个元素都会关联一个 double 类型的分数（score）。redis 正是通过分数来为集合的成员进行从小到大排序。有序集合的成员是唯一的，但是分数可以重复。
+
+- `zadd key score1 memeber1[score2 member2 ...]`相有序集合添加一个或者多个成员，或者更新已经存在成员的分数
+- `zrange key start stop [withscores]` 通过索引区间返回有序集合中指定区间内分数的成员
+- `zincrby key increment member` 有序集合中对指定成员的分数上加上一个增量
+- `zrem key member [member ...]` 移除一个或多个成员
 
 # golang操作redis
 
